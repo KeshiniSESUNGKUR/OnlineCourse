@@ -1,0 +1,15 @@
+function calculateCurrentState() private view returns (bool) {
+    Proposal storage proposal = proposal_history[counter];
+
+    uint256 approve = proposal.approve;
+    uint256 reject = proposal.reject;
+    uint256 pass = proposal.pass;
+    uint256 total_votes = approve + reject + pass;
+
+    // Proposal logic: Approve more than half of all votes or Reject more than the sum of Approve and Pass
+    if (approve > total_votes / 2 || reject > approve + pass) {
+        return true; // Proposal succeeds
+    } else {
+        return false; // Proposal fails
+    }
+}
